@@ -6,6 +6,20 @@ project(libQIRC)
 cmake_minimum_required(VERSION 2.8)
 
 #
+# add cmake/ directory with our custom cmake macros to module path
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+
+#
+# Include CPack to build binary packages
+set(CPACK_PACKAGE_DESCRIPTION "QIRC class library")
+set(CPACK_PACKAGE_VENDOR "#das-system")
+set(CPACK_PACKAGE_VERSION_MAJOR "0")
+set(CPACK_PACKAGE_VERSION_MINOR "99")
+set(CPACK_PACKAGE_VERSION_PATCH "1")
+set(CPACK_GENERATOR "TGZ;TBZ2")
+include(CPack)
+
+#
 # look for Qt4
 #
 find_package(Qt4 REQUIRED)
@@ -32,3 +46,8 @@ add_library(QIRC ${libQIRC_SOURCES})
 # install rules for library+headers
 install(TARGETS QIRC ARCHIVE DESTINATION lib)
 install(FILES ${libQIRC_HEADERS} DESTINATION include/QIRC)
+
+#
+# Check if Doxygen is installed and if so add build targets for
+# the API dox
+include(DocTarget OPTIONAL)
