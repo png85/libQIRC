@@ -16,4 +16,19 @@ set(QT_USE_QTNETWORK TRUE)
 # Prepare QT_LIBRARIES macro etc.
 include(${QT_USE_FILE})
 
+#
+# list of libQIRC sources
+set(libQIRC_SOURCES serverinfo.cc)
 
+#
+# list of libQIRC headers
+set(libQIRC_HEADERS serverinfo.h ServerInfo)
+
+#
+# build target for libQIRC static library
+add_library(QIRC ${libQIRC_SOURCES})
+
+#
+# install rules for library+headers
+install(TARGETS QIRC ARCHIVE DESTINATION lib)
+install(FILES ${libQIRC_HEADERS} DESTINATION include/QIRC)

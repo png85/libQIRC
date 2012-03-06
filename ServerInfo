@@ -1,0 +1,6 @@
+#ifndef SERVERINFO
+#define SERVERINFO
+
+#include "serverinfo.h"
+
+#endif // !SERVERINFO
