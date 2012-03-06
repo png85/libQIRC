@@ -20,9 +20,9 @@ QString ServerInfo::host() {
 
 
 /// \brief Set host part to new value
-void ServerInfo::setHost(QString host) {
-  if (m_host != host)
-    m_host = host;
+void ServerInfo::setHost(QString h) {
+  if (m_host != h)
+    m_host = h;
 }
 
 
@@ -33,9 +33,9 @@ unsigned short ServerInfo::port() {
 
 
 /// \brief Set port number to new value
-void ServerInfo::setPort(unsigned short port) {
-  if (m_port != port)
-    m_port = port;
+void ServerInfo::setPort(unsigned short p) {
+  if (m_port != p)
+    m_port = p;
 }
 
 

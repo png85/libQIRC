@@ -11,10 +11,10 @@ namespace QIRC {
     ServerInfo(const ServerInfo& o);
     
     QString host();
-    void setHost(QString host);
+    void setHost(QString h);
 
     unsigned short port();
-    void setPort(unsigned short port);
+    void setPort(unsigned short p);
 
     QString toString();
 
