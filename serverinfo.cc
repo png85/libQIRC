@@ -3,7 +3,7 @@
 using namespace QIRC;
 
 
-// \brief Construct new ServerInfo
+/// \brief Construct new ServerInfo
 ServerInfo::ServerInfo(QString host, unsigned short port) :
   m_host(host), m_port(port) {}
 
