@@ -1,0 +1,6 @@
+#ifndef HOSTMASK
+#define HOSTMASK 1
+
+#include "hostmask.h"
+
+#endif // !HOSTMASK

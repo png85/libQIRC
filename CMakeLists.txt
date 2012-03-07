@@ -32,11 +32,12 @@ include(${QT_USE_FILE})
 
 #
 # list of libQIRC sources
-set(libQIRC_SOURCES serverinfo.cc)
+set(libQIRC_SOURCES serverinfo.cc hostmask.cc)
 
 #
 # list of libQIRC headers
-set(libQIRC_HEADERS serverinfo.h ServerInfo)
+set(libQIRC_HEADERS serverinfo.h ServerInfo
+  hostmask.h HostMask)
 
 #
 # build target for libQIRC static library
