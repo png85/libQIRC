@@ -1,3 +1,7 @@
+/// \file
+/// \brief Implementation of HostMask utility class
+///
+/// \author png!das-system
 #include <QRegExp>
 #include "HostMask"
 

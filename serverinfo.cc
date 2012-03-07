@@ -1,3 +1,7 @@
+/// \file
+/// \brief Implementation of ServerInfo utility class
+///
+/// \author png!das-system
 #include "ServerInfo"
 
 using namespace QIRC;

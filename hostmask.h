@@ -1,3 +1,7 @@
+/// \file
+/// \brief Declaration of HostMask utility class
+///
+/// \author png!das-system
 #ifndef HOSTMASK_H
 #define HOSTMASK_H 1
 

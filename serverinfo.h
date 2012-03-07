@@ -1,3 +1,7 @@
+/// \file
+/// \brief Declaration of ServerInfo utility class
+///
+/// \author png!das-system
 #ifndef SERVERINFO_H
 #define SERVERINFO_H
 
