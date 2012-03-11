@@ -24,12 +24,14 @@ Connection::~Connection() {
 
 
 void Connection::connect() {
-  /// TODO(png): ...
+  Q_ASSERT(m_socket != NULL);
+  m_socket->connectToHost(m_currentServer.host(), m_currentServer.port());
 }
 
 
 void Connection::disconnect() {
-  /// TODO(png): ...
+  Q_ASSERT(m_socket != NULL);
+  m_socket->disconnectFromHost();
 }
 
 
