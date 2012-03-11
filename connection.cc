@@ -46,9 +46,8 @@ void Connection::setServer(ServerInfo& si) {
 
 
 void Connection::setServer(QString h, unsigned short p) {
-  // FIXME(png): reconnect if server differs from current one
-  m_currentServer.setHost(h);
-  m_currentServer.setPort(p);
+  ServerInfo si(h, p);
+  setServer(si);
 }
 
 
