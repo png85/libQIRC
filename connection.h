@@ -26,6 +26,9 @@ namespace QIRC {
 
     /// \brief TCP socket for connection to server
     QTcpSocket* m_socket;
+
+  private:
+    bool setupSocket();
   };
 };
 
