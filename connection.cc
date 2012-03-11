@@ -70,5 +70,41 @@ bool Connection::setupSocket() {
     return false;
   }
 
+  // connect the socket's signals to our slots
+  QObject::connect(m_socket, SIGNAL(connected()),
+		   this, SLOT(socket_connected()));
+  QObject::connect(m_socket, SIGNAL(disconnected()),
+		   this, SLOT(socket_disconnected()));
+  QObject::connect(m_socket, SIGNAL(error(QAbstractSocket::SocketError)),
+		   this, SLOT(socket_error(QAbstractSocket::SocketError)));
+  QObject::connect(m_socket, SIGNAL(readyRead()),
+		   this, SLOT(socket_readyRead()));
+
   return true;
 }
+
+
+/// \brief Slot for m_socket::connected()
+void Connection::socket_connected() {
+  qDebug() << "Connection::m_socket connected!";
+}
+
+
+/// b\rief Slot for m_socket::disconnected()
+void Connection::socket_disconnected() {
+  qDebug() << "Connection::m_socket disconnected!";
+}
+
+
+/// \brief Slot for m_socket::error()
+void Connection::socket_error(QAbstractSocket::SocketError err) {
+  qDebug() << "Connection::m_socket generated an error:"
+	   << err;
+}
+
+
+/// \brief Slot for m_socket::readyRead()
+void Connection::socket_readyRead() {
+  qDebug() << "Connection::m_socket has data to read!";
+}
+

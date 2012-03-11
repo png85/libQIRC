@@ -27,6 +27,12 @@ namespace QIRC {
     /// \brief TCP socket for connection to server
     QTcpSocket* m_socket;
 
+  protected slots:
+    void socket_connected();
+    void socket_disconnected();
+    void socket_error(QAbstractSocket::SocketError);
+    void socket_readyRead();
+
   private:
     bool setupSocket();
   };
