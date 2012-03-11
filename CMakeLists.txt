@@ -32,16 +32,20 @@ include(${QT_USE_FILE})
 
 #
 # list of libQIRC sources
-set(libQIRC_SOURCES serverinfo.cc hostmask.cc)
+set(libQIRC_SOURCES serverinfo.cc hostmask.cc connection.cc)
 
 #
 # list of libQIRC headers
 set(libQIRC_HEADERS serverinfo.h ServerInfo
-  hostmask.h HostMask)
+  hostmask.h HostMask connection.h Connection)
+
+# list of headers to process with Qt moc
+set(libQIRC_MOC_HEADERS connection.h)
+QT4_WRAP_CPP(libQIRC_MOC_SOURCES ${libQIRC_MOC_HEADERS})
 
 #
 # build target for libQIRC static library
-add_library(QIRC ${libQIRC_SOURCES})
+add_library(QIRC ${libQIRC_SOURCES} ${libQIRC_MOC_SOURCES})
 
 #
 # install rules for library+headers

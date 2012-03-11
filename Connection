@@ -1,0 +1,6 @@
+#ifndef CONNECTION
+#define CONNECTION 1
+
+#include "connection.h"
+
+#endif // !CONNECTION
