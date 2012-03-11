@@ -22,6 +22,9 @@ namespace QIRC {
 
     QString toString();
 
+    bool operator ==(const ServerInfo& o) const;
+    bool operator !=(const ServerInfo& o) const;
+
   protected:
     /// \brief Hostname of the IRC server
     QString m_host;

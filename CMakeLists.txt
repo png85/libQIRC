@@ -52,3 +52,10 @@ install(FILES ${libQIRC_HEADERS} DESTINATION include/QIRC)
 # Check if Doxygen is installed and if so add build targets for
 # the API dox
 include(DocTarget OPTIONAL)
+
+enable_testing()
+
+add_executable(test_serverinfo-operators tests/serverinfo-operators.cc)
+target_link_libraries(test_serverinfo-operators QIRC ${QT_LIBRARIES})
+add_test(NAME "ServerInfo:operators" COMMAND test_serverinfo-operators)
+

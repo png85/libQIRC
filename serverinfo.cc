@@ -50,3 +50,16 @@ QString ServerInfo::toString() {
 
   return r;
 }
+
+
+/// \brief Equality operator
+bool ServerInfo::operator ==(const ServerInfo& o) const {
+  return ((m_host == o.m_host) && (m_port == o.m_port));
+}
+
+
+/// \brief Inequality operator
+bool ServerInfo::operator !=(const ServerInfo& o) const {
+  return !((*this) == o);
+}
+
