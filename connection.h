@@ -6,6 +6,9 @@
 #include "ServerInfo"
 
 namespace QIRC {
+  /// \brief Connection to an IRC server
+  ///
+  /// This class maintains a connection to an IRC server.
   class Connection : public QObject {
     Q_OBJECT
   public:

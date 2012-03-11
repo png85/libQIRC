@@ -2,6 +2,7 @@
 
 using namespace QIRC;
 
+/// \brief Construct from given ServerInfo
 Connection::Connection(const ServerInfo& si) :
   m_currentServer(si), m_socket(NULL) {
   if (!setupSocket())
@@ -9,6 +10,7 @@ Connection::Connection(const ServerInfo& si) :
 }
 
 
+/// \brief Construct from host/port
 Connection::Connection(QString h, unsigned short p) :
   m_currentServer(h, p), m_socket(NULL) {
   if (!setupSocket())
@@ -23,23 +25,33 @@ Connection::~Connection() {
 }
 
 
+/// \brief Connect to IRC server
 void Connection::connect() {
   Q_ASSERT(m_socket != NULL);
   m_socket->connectToHost(m_currentServer.host(), m_currentServer.port());
 }
 
 
+/// \brief Disconnect from IRC server
 void Connection::disconnect() {
   Q_ASSERT(m_socket != NULL);
   m_socket->disconnectFromHost();
 }
 
 
+/// \brief Access current server for this connection
 ServerInfo Connection::server() const {
   return m_currentServer;
 }
 
 
+/// \brief Set current server for this connection
+///
+/// \attention This method currently does NOT reconnect to the
+/// new server in case the address differs from the current one!
+/// The reconnect has to be initiated manually by calling
+/// disconnect() and connect(). This will most likely get changed
+/// in future versions. -- png
 void Connection::setServer(ServerInfo& si) {
   // FIXME(png): reconnect if server differs from current one
   m_currentServer.setHost(si.host());
@@ -47,6 +59,7 @@ void Connection::setServer(ServerInfo& si) {
 }
 
 
+/// \brief Set current server for this connection
 void Connection::setServer(QString h, unsigned short p) {
   ServerInfo si(h, p);
   setServer(si);
@@ -92,7 +105,7 @@ void Connection::socket_connected() {
 }
 
 
-/// b\rief Slot for m_socket::disconnected()
+/// \brief Slot for m_socket::disconnected()
 void Connection::socket_disconnected() {
   qDebug() << "Connection::m_socket disconnected!";
 }
