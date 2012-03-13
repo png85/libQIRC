@@ -18,7 +18,7 @@ ServerInfo::ServerInfo(const ServerInfo& o) :
 
 
 /// \brief Access host part
-QString ServerInfo::host() {
+QString ServerInfo::host() const {
   return m_host;
 }
 
@@ -31,7 +31,7 @@ void ServerInfo::setHost(QString h) {
 
 
 /// \brief Access port number
-quint16 ServerInfo::port() {
+quint16 ServerInfo::port() const {
   return m_port;
 }
 
@@ -44,7 +44,7 @@ void ServerInfo::setPort(quint16 p) {
 
 
 /// \brief String representation for logging/debugging
-QString ServerInfo::toString() {
+QString ServerInfo::toString() const {
   QString r = "ServerInfo:{host=" + m_host + "; " +
     "port=" + QString::number(m_port) + "}";
 

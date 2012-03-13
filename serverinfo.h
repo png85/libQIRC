@@ -14,13 +14,13 @@ namespace QIRC {
     ServerInfo(QString host, quint16 port);
     ServerInfo(const ServerInfo& o);
     
-    QString host();
+    QString host() const;
     void setHost(QString h);
 
-    quint16 port();
+    quint16 port() const;
     void setPort(quint16 p);
 
-    QString toString();
+    QString toString() const;
 
     ServerInfo& operator =(const ServerInfo& o);
     bool operator ==(const ServerInfo& o) const;
