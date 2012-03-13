@@ -30,6 +30,9 @@ namespace QIRC {
     QString nick();
     void setNick(QString nick);
 
+    QString realName();
+    void setRealName(QString realName);
+
     void connect();
     void disconnect();
 
@@ -48,6 +51,9 @@ namespace QIRC {
 
     /// \brief Current nickname
     QString m_nick;
+
+    /// \brief Real name to use on IRC
+    QString m_realName;
 
     void sendMessage(QString msg);
 

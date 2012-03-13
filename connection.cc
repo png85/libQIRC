@@ -6,7 +6,7 @@ using namespace QIRC;
 Connection::Connection() :
   m_currentServer("127.0.0.1", 6667), m_socket(NULL),
   m_serverPassword(""),
-  m_ident("QIRC"), m_nick("QIRC") {
+  m_ident("QIRC"), m_nick("QIRC"), m_realName("QIRC") {
   if (!setupSocket()) {
     qCritical() << "Connection: Unable to setup m_socket!";
     exit(1);
@@ -18,7 +18,7 @@ Connection::Connection() :
 Connection::Connection(const ServerInfo& si) :
   m_currentServer(si), m_socket(NULL),
   m_serverPassword(""),
-  m_ident("QIRC"), m_nick("QIRC") {
+  m_ident("QIRC"), m_nick("QIRC"), m_realName("QIRC") {
   if (!setupSocket()) {
     qCritical() << "Connection: Unable to setup m_socket!";
     exit(1);
@@ -30,7 +30,7 @@ Connection::Connection(const ServerInfo& si) :
 Connection::Connection(QString h, quint16 p) :
   m_currentServer(h, p), m_socket(NULL),
   m_serverPassword(""),
-  m_ident("QIRC"), m_nick ("QIRC") {
+  m_ident("QIRC"), m_nick ("QIRC"), m_realName("QIRC") {
   if (!setupSocket()) {
     qCritical() << "Connection: Unable to setup m_socket!";
     exit(1);
@@ -192,6 +192,16 @@ QString Connection::nick() {
 }
 
 
+void Connection::setRealName(QString realName) {
+  m_realName = realName;
+}
+
+
+QString Connection::realName() {
+  return m_realName;
+}
+
+
 /// \brief Send message to server
 void Connection::sendMessage(QString msg) {
   QTextStream s(m_socket);
@@ -210,6 +220,6 @@ void Connection::authenticate() {
 
   // USER username hostname servername: realname
   sendMessage("USER " + m_ident + " " + m_currentServer.host() + " "
-	      + m_currentServer.host() + ": QIRC");
+	      + m_currentServer.host() + ": " + m_realName);
 }
 
