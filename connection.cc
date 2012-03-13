@@ -118,6 +118,10 @@ bool Connection::setupSocket() {
 
 /// \brief Slot for m_socket::connected()
 void Connection::socket_connected() {
+  // authenticate to server if we have a password set for
+  // the connection
+  authenticateConnection();
+
   emit connected(m_currentServer);
 }
 
