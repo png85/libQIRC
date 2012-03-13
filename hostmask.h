@@ -5,6 +5,7 @@
 #ifndef HOSTMASK_H
 #define HOSTMASK_H 1
 
+#include <QDebug>
 #include <QString>
 
 namespace QIRC {
@@ -39,5 +40,7 @@ namespace QIRC {
     QString m_host;
   };
 };
+
+QDebug& operator <<(QDebug& dbg, QIRC::HostMask& h);
 
 #endif // !HOSTMASK_H

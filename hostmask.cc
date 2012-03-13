@@ -82,3 +82,11 @@ bool HostMask::operator !=(const HostMask& o) const {
   return !(*this == o);
 }
 
+
+/// \brief Output HostMask on QDebug stream
+///
+/// Writes the string representation of the given HostMask instance
+/// to the given QDebug stream.
+QDebug& operator <<(QDebug& dbg, QIRC::HostMask& h) {
+  return (dbg << h.toString());
+}
