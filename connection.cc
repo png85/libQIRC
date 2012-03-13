@@ -55,15 +55,15 @@ ServerInfo Connection::server() const {
 
 /// \brief Set current server for this connection
 ///
-/// \attention This method currently does NOT reconnect to the
-/// new server in case the address differs from the current one!
-/// The reconnect has to be initiated manually by calling
-/// disconnect() and connect(). This will most likely get changed
-/// in future versions. -- png
+/// \attention This method will disconnect from the current
+/// server and connect to the new one if they differ.
 void Connection::setServer(ServerInfo& si) {
-  // FIXME(png): reconnect if server differs from current one
-  m_currentServer.setHost(si.host());
-  m_currentServer.setPort(si.port());
+  if (si != m_currentServer) {
+    disconnect();
+    m_currentServer.setHost(si.host());
+    m_currentServer.setPort(si.port());
+    connect();
+  }
 }
 
 
