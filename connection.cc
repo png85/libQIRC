@@ -2,6 +2,16 @@
 
 using namespace QIRC;
 
+/// \brief Construct without server information
+Connection::Connection() :
+  m_currentServer("127.0.0.1", 6667), m_socket(NULL) {
+  if (!setupSocket()) {
+    qCritical() << "Connection: Unable to setup m_socket!";
+    exit(1);
+  }
+}
+
+
 /// \brief Construct from given ServerInfo
 Connection::Connection(const ServerInfo& si) :
   m_currentServer(si), m_socket(NULL) {

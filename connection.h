@@ -12,6 +12,7 @@ namespace QIRC {
   class Connection : public QObject {
     Q_OBJECT
   public:
+    Connection();
     Connection(const ServerInfo& si);
     Connection(QString h, quint16 p);
     virtual ~Connection();
