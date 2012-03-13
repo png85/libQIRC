@@ -211,10 +211,11 @@ void Connection::sendMessage(QString msg) {
 
 /// \brief Authenticate connection
 ///
-/// Authenticates to the IRC server by sending an USER message.
+/// Authenticates to the IRC server by sending USER/NICK messages.
 ///
-/// If m_serverPassword is set this method will send a PASS
-/// message to the server to authenticate with a password.
+/// If m_serverPassword is set this method will also send a PASS
+/// message to the server to authenticate with a password before
+/// any of the others are sent.
 void Connection::authenticate() {
   if (m_serverPassword.length() > 0) {
     sendMessage("PASS " + m_serverPassword);
@@ -223,5 +224,8 @@ void Connection::authenticate() {
   // USER username hostname servername: realname
   sendMessage("USER " + m_ident + " " + m_currentServer.host() + " "
 	      + m_currentServer.host() + ": " + m_realName);
+
+  // NICK nickname
+  sendMessage("NICK " + m_nick);
 }
 
