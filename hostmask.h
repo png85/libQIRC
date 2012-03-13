@@ -25,6 +25,9 @@ namespace QIRC {
 
     QString toString() const;
 
+    bool operator ==(const HostMask& o) const;
+    bool operator !=(const HostMask& o) const;
+
   protected:
     /// \brief Nickname part of hostmask
     QString m_nick;

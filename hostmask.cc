@@ -69,3 +69,16 @@ QString HostMask::toString() const {
   return (m_nick + "!" + m_user + "@" + m_host);
 }
 
+
+/// \brief Equality operator
+bool HostMask::operator ==(const HostMask& o) const {
+  return ((m_nick == o.m_nick) && (m_user == o.m_user) &&
+	  (m_host == o.m_host));
+}
+
+
+/// \brief Inequality operator
+bool HostMask::operator !=(const HostMask& o) const {
+  return !(*this == o);
+}
+
