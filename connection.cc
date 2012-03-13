@@ -211,6 +211,8 @@ void Connection::sendMessage(QString msg) {
 
 /// \brief Authenticate connection
 ///
+/// Authenticates to the IRC server by sending an USER message.
+///
 /// If m_serverPassword is set this method will send a PASS
 /// message to the server to authenticate with a password.
 void Connection::authenticate() {
