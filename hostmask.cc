@@ -23,7 +23,7 @@ HostMask::HostMask(const HostMask& other) :
 
 
 /// \brief Access nickname part
-QString HostMask::nick() {
+QString HostMask::nick() const {
   return m_nick;
 }
 
@@ -37,7 +37,7 @@ void HostMask::setNick(QString n) {
 
 
 /// \brief Access username part
-QString HostMask::user() {
+QString HostMask::user() const {
   return m_user;
 }
 
@@ -51,7 +51,7 @@ void HostMask::setUser(QString u) {
 
 
 /// \brief Access hostname part
-QString HostMask::host() {
+QString HostMask::host() const {
   return m_host;
 }
 
@@ -65,7 +65,7 @@ void HostMask::setHost(QString h) {
 
 
 /// \brief String representation for logging/debugging
-QString HostMask::toString() {
+QString HostMask::toString() const {
   return (m_nick + "!" + m_user + "@" + m_host);
 }
 

@@ -14,16 +14,16 @@ namespace QIRC {
     HostMask(QString nick, QString user, QString host);
     HostMask(const HostMask& other);
 
-    QString nick();
+    QString nick() const;
     void setNick(QString n);
 
-    QString user();
+    QString user() const;
     void setUser(QString u);
 
-    QString host();
+    QString host() const;
     void setHost(QString h);
 
-    QString toString();
+    QString toString() const;
 
   protected:
     /// \brief Nickname part of hostmask
