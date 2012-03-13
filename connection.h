@@ -21,16 +21,16 @@ namespace QIRC {
     void setServer(const ServerInfo& si);
     void setServer(QString h, quint16 p);
 
-    QString serverPassword();
+    QString serverPassword() const;
     void setServerPassword(QString password);
 
-    QString ident();
+    QString ident() const;
     void setIdent(QString ident);
 
-    QString nick();
+    QString nick() const ;
     void setNick(QString nick);
 
-    QString realName();
+    QString realName() const;
     void setRealName(QString realName);
 
     void connect();

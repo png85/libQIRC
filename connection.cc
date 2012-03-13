@@ -167,7 +167,7 @@ void Connection::setServerPassword(QString password) {
 }
 
 
-QString Connection::serverPassword() {
+QString Connection::serverPassword() const {
   return m_serverPassword;
 }
 
@@ -177,7 +177,7 @@ void Connection::setIdent(QString ident) {
 }
 
 
-QString Connection::ident() {
+QString Connection::ident() const {
   return m_ident;
 }
 
@@ -187,7 +187,7 @@ void Connection::setNick(QString nick) {
 }
 
 
-QString Connection::nick() {
+QString Connection::nick() const {
   return m_nick;
 }
 
@@ -197,7 +197,7 @@ void Connection::setRealName(QString realName) {
 }
 
 
-QString Connection::realName() {
+QString Connection::realName() const {
   return m_realName;
 }
 
