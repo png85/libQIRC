@@ -60,8 +60,7 @@ ServerInfo Connection::server() const {
 void Connection::setServer(ServerInfo& si) {
   if (si != m_currentServer) {
     disconnect();
-    m_currentServer.setHost(si.host());
-    m_currentServer.setPort(si.port());
+    m_currentServer = si;
     connect();
   }
 }
