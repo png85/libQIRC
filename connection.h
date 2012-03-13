@@ -21,6 +21,9 @@ namespace QIRC {
     void setServer(ServerInfo& si);
     void setServer(QString h, quint16 p);
 
+    QString serverPassword();
+    void setServerPassword(QString password);
+
     QString ident();
     void setIdent(QString ident);
 
@@ -36,6 +39,9 @@ namespace QIRC {
 
     /// \brief TCP socket for connection to server
     QTcpSocket* m_socket;
+
+    /// \brief Server password
+    QString m_serverPassword;
 
     /// \brief ident username
     QString m_ident;

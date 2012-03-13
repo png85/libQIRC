@@ -5,6 +5,7 @@ using namespace QIRC;
 /// \brief Construct without server information
 Connection::Connection() :
   m_currentServer("127.0.0.1", 6667), m_socket(NULL),
+  m_serverPassword(""),
   m_ident("QIRC"), m_nick("QIRC") {
   if (!setupSocket()) {
     qCritical() << "Connection: Unable to setup m_socket!";
@@ -16,6 +17,7 @@ Connection::Connection() :
 /// \brief Construct from given ServerInfo
 Connection::Connection(const ServerInfo& si) :
   m_currentServer(si), m_socket(NULL),
+  m_serverPassword(""),
   m_ident("QIRC"), m_nick("QIRC") {
   if (!setupSocket()) {
     qCritical() << "Connection: Unable to setup m_socket!";
@@ -27,6 +29,7 @@ Connection::Connection(const ServerInfo& si) :
 /// \brief Construct from host/port
 Connection::Connection(QString h, quint16 p) :
   m_currentServer(h, p), m_socket(NULL),
+  m_serverPassword(""),
   m_ident("QIRC"), m_nick ("QIRC") {
   if (!setupSocket()) {
     qCritical() << "Connection: Unable to setup m_socket!";
@@ -158,6 +161,16 @@ void Connection::socket_readyRead() {
       qDebug() << line;
     }
   }
+}
+
+
+void Connection::setServerPassword(QString password) {
+  m_serverPassword = password;
+}
+
+
+QString Connection::serverPassword() {
+  return m_serverPassword;
 }
 
 
