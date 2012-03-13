@@ -162,41 +162,49 @@ void Connection::socket_readyRead() {
 }
 
 
+/// \brief Set server password to new value
 void Connection::setServerPassword(QString password) {
   m_serverPassword = password;
 }
 
 
+/// \brief Return current server password
 QString Connection::serverPassword() const {
   return m_serverPassword;
 }
 
 
+/// \brief Set ident user ID
 void Connection::setIdent(QString ident) {
   m_ident = ident;
 }
 
 
+/// \brief Return current ident user ID
 QString Connection::ident() const {
   return m_ident;
 }
 
 
+/// \brief Set nickname to new value
 void Connection::setNick(QString nick) {
   m_nick = nick;
 }
 
 
+/// \brief Return current nickname
 QString Connection::nick() const {
   return m_nick;
 }
 
 
+/// \brief Set real name to use on IRC
 void Connection::setRealName(QString realName) {
   m_realName = realName;
 }
 
 
+/// \brief Return real name used on IRC
 QString Connection::realName() const {
   return m_realName;
 }
