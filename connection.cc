@@ -5,7 +5,7 @@ using namespace QIRC;
 /// \brief Construct without server information
 Connection::Connection() :
   m_currentServer("127.0.0.1", 6667), m_socket(NULL),
-  m_serverPassword(""),
+  m_serverPassword(""), m_connected(false),
   m_ident("QIRC"), m_nick("QIRC"), m_realName("QIRC") {
   if (!setupSocket()) {
     qCritical() << "Connection: Unable to setup m_socket!";
@@ -17,7 +17,7 @@ Connection::Connection() :
 /// \brief Construct from given ServerInfo
 Connection::Connection(const ServerInfo& si) :
   m_currentServer(si), m_socket(NULL),
-  m_serverPassword(""),
+  m_serverPassword(""), m_connected(false),
   m_ident("QIRC"), m_nick("QIRC"), m_realName("QIRC") {
   if (!setupSocket()) {
     qCritical() << "Connection: Unable to setup m_socket!";
@@ -29,7 +29,7 @@ Connection::Connection(const ServerInfo& si) :
 /// \brief Construct from host/port
 Connection::Connection(QString h, quint16 p) :
   m_currentServer(h, p), m_socket(NULL),
-  m_serverPassword(""),
+  m_serverPassword(""), m_connected(false),
   m_ident("QIRC"), m_nick ("QIRC"), m_realName("QIRC") {
   if (!setupSocket()) {
     qCritical() << "Connection: Unable to setup m_socket!";
@@ -47,6 +47,11 @@ Connection::~Connection() {
 
 /// \brief Connect to IRC server
 void Connection::connect() {
+  if (m_connected) {
+    // already connected to a server; disconnect first
+    disconnect();
+  }
+
   m_socket->connectToHost(m_currentServer.host(), m_currentServer.port());
 }
 
@@ -69,9 +74,15 @@ ServerInfo Connection::server() const {
 /// server and connect to the new one if they differ.
 void Connection::setServer(const ServerInfo& si) {
   if (si != m_currentServer) {
-    disconnect();
+    // disconnect from current server if we're connected
+    bool connStatus = m_connected;
+    if (connStatus) 
+      disconnect();
     m_currentServer = si;
-    connect();
+
+    // only reconnect if we were previously connected
+    if (connStatus)
+      connect();
   }
 }
 
@@ -118,6 +129,7 @@ bool Connection::setupSocket() {
 
 /// \brief Slot for m_socket::connected()
 void Connection::socket_connected() {
+  m_connected = true;
   // authenticate to server if we have a password set for
   // the connection
   authenticate();
@@ -128,6 +140,7 @@ void Connection::socket_connected() {
 
 /// \brief Slot for m_socket::disconnected()
 void Connection::socket_disconnected() {
+  m_connected = false;
   emit disconnected(m_currentServer);
 }
 
@@ -212,8 +225,13 @@ QString Connection::realName() const {
 
 /// \brief Send message to server
 void Connection::sendMessage(QString msg) {
-  QTextStream s(m_socket);
-  s << msg.trimmed() << "\n";
+  if (m_connected) {
+    QTextStream s(m_socket);
+    s << msg.trimmed() << "\n";
+  } else {
+    qWarning() << "Tried to use Connection::sendMessage() while "
+	       << "m_connected!=true! Message was:" << msg.trimmed();
+  }
 }
 
 
@@ -225,6 +243,11 @@ void Connection::sendMessage(QString msg) {
 /// message to the server to authenticate with a password before
 /// any of the others are sent.
 void Connection::authenticate() {
+  if (!m_connected) {
+    qWarning() << "Tried to use Connection::authenticat() while "
+	       << "m_connected!=true!";
+  }
+
   if (m_serverPassword.length() > 0) {
     sendMessage("PASS " + m_serverPassword);
   }
@@ -237,3 +260,8 @@ void Connection::authenticate() {
   sendMessage("NICK " + m_nick);
 }
 
+
+/// \brief Are we currently connected?
+bool Connection::isConnected() const {
+  return m_connected;
+}

@@ -35,6 +35,7 @@ namespace QIRC {
 
     void connect();
     void disconnect();
+    bool isConnected() const;
 
   protected:
     /// \brief ServerInfo for the currently connected server
@@ -42,6 +43,9 @@ namespace QIRC {
 
     /// \brief TCP socket for connection to server
     QTcpSocket* m_socket;
+
+    /// \brief Flag indicating wether we're currently connected
+    bool m_connected;
 
     /// \brief Server password
     QString m_serverPassword;
