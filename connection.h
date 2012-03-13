@@ -36,6 +36,16 @@ namespace QIRC {
     void socket_error(QAbstractSocket::SocketError);
     void socket_readyRead();
 
+  signals:
+    /// \brief TCP/IP socket error
+    ///
+    /// This signal gets emitted when the underlying socket for the
+    /// connection to the IRC server has generated an error.
+    ///
+    /// \param err Error as received from the socket
+    /// \param msg Error message in human-readable form
+    void socketError(QAbstractSocket::SocketError err, QString msg);
+
   private:
     bool setupSocket();
   };

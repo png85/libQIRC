@@ -5,16 +5,20 @@ using namespace QIRC;
 /// \brief Construct from given ServerInfo
 Connection::Connection(const ServerInfo& si) :
   m_currentServer(si), m_socket(NULL) {
-  if (!setupSocket())
+  if (!setupSocket()) {
+    qCritical() << "Connection: Unable to setup m_socket!";
     exit(1);
+  }
 }
 
 
 /// \brief Construct from host/port
 Connection::Connection(QString h, unsigned short p) :
   m_currentServer(h, p), m_socket(NULL) {
-  if (!setupSocket())
+  if (!setupSocket()) {
+    qCritical() << "Connection: Unable to setup m_socket!";
     exit(1);
+  }
 }
 
 
@@ -28,14 +32,18 @@ Connection::~Connection() {
 /// \brief Connect to IRC server
 void Connection::connect() {
   Q_ASSERT(m_socket != NULL);
-  m_socket->connectToHost(m_currentServer.host(), m_currentServer.port());
+  if (m_socket != NULL) {
+    m_socket->connectToHost(m_currentServer.host(), m_currentServer.port());
+  }
 }
 
 
 /// \brief Disconnect from IRC server
 void Connection::disconnect() {
   Q_ASSERT(m_socket != NULL);
-  m_socket->disconnectFromHost();
+  if (m_socket != NULL) {
+    m_socket->disconnectFromHost();
+  }
 }
 
 
@@ -101,25 +109,44 @@ bool Connection::setupSocket() {
 
 /// \brief Slot for m_socket::connected()
 void Connection::socket_connected() {
-  qDebug() << "Connection::m_socket connected!";
+  qDebug() << "Connection::m_socket connected to"
+	   << m_currentServer.toString();
 }
 
 
 /// \brief Slot for m_socket::disconnected()
 void Connection::socket_disconnected() {
-  qDebug() << "Connection::m_socket disconnected!";
+  qDebug() << "Connection::m_socket disconnected from"
+	   << m_currentServer.toString();
 }
 
 
 /// \brief Slot for m_socket::error()
+///
+/// This slot is connected to the error() signal of m_socket.
+/// It fetches the error message belonging to err and re-emits
+/// the signal to the controlling application as
+/// socketError().
+///
+/// \param err Socket error as received from m_socket's error() signal
 void Connection::socket_error(QAbstractSocket::SocketError err) {
-  qDebug() << "Connection::m_socket generated an error:"
-	   << err;
+  QString msg = m_socket->errorString();
+  qWarning() << "Connection::m_socket (connected to"
+	     << m_currentServer.toString() << ") generated an error: "
+	     << msg;
+  emit socketError(err, msg);
 }
 
 
 /// \brief Slot for m_socket::readyRead()
 void Connection::socket_readyRead() {
-  qDebug() << "Connection::m_socket has data to read!";
+  QString line;
+
+  while (m_socket->canReadLine()) {
+    line = m_socket->readLine();
+    if (!line.isNull()) {
+      qDebug() << line;
+    }
+  }
 }
 
