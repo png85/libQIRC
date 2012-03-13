@@ -49,6 +49,10 @@ namespace QIRC {
     /// \brief Current nickname
     QString m_nick;
 
+    void sendMessage(QString msg);
+
+    void authenticateConnection();
+
   protected slots:
     void socket_connected();
     void socket_disconnected();

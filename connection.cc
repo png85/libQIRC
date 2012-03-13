@@ -47,19 +47,13 @@ Connection::~Connection() {
 
 /// \brief Connect to IRC server
 void Connection::connect() {
-  Q_ASSERT(m_socket != NULL);
-  if (m_socket != NULL) {
-    m_socket->connectToHost(m_currentServer.host(), m_currentServer.port());
-  }
+  m_socket->connectToHost(m_currentServer.host(), m_currentServer.port());
 }
 
 
 /// \brief Disconnect from IRC server
 void Connection::disconnect() {
-  Q_ASSERT(m_socket != NULL);
-  if (m_socket != NULL) {
-    m_socket->disconnectFromHost();
-  }
+  m_socket->disconnectFromHost();
 }
 
 
@@ -191,5 +185,23 @@ void Connection::setNick(QString nick) {
 
 QString Connection::nick() {
   return m_nick;
+}
+
+
+/// \brief Send message to server
+void Connection::sendMessage(QString msg) {
+  QTextStream s(m_socket);
+  s << msg.trimmed() << "\n";
+}
+
+
+/// \brief Authenticate connection
+///
+/// If m_serverPassword is set this method will send a PASS
+/// message to the server to authenticate with a password.
+void Connection::authenticateConnection() {
+  if (m_serverPassword.length() > 0) {
+    sendMessage("PASS " + m_serverPassword);
+  }
 }
 
