@@ -13,7 +13,7 @@ Connection::Connection(const ServerInfo& si) :
 
 
 /// \brief Construct from host/port
-Connection::Connection(QString h, unsigned short p) :
+Connection::Connection(QString h, quint16 p) :
   m_currentServer(h, p), m_socket(NULL) {
   if (!setupSocket()) {
     qCritical() << "Connection: Unable to setup m_socket!";
@@ -68,7 +68,7 @@ void Connection::setServer(ServerInfo& si) {
 
 
 /// \brief Set current server for this connection
-void Connection::setServer(QString h, unsigned short p) {
+void Connection::setServer(QString h, quint16 p) {
   ServerInfo si(h, p);
   setServer(si);
 }

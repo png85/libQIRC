@@ -8,7 +8,7 @@ using namespace QIRC;
 
 
 /// \brief Construct new ServerInfo
-ServerInfo::ServerInfo(QString host, unsigned short port) :
+ServerInfo::ServerInfo(QString host, quint16 port) :
   m_host(host), m_port(port) {}
 
 
@@ -31,13 +31,13 @@ void ServerInfo::setHost(QString h) {
 
 
 /// \brief Access port number
-unsigned short ServerInfo::port() {
+quint16 ServerInfo::port() {
   return m_port;
 }
 
 
 /// \brief Set port number to new value
-void ServerInfo::setPort(unsigned short p) {
+void ServerInfo::setPort(quint16 p) {
   if (m_port != p)
     m_port = p;
 }

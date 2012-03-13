@@ -13,12 +13,12 @@ namespace QIRC {
     Q_OBJECT
   public:
     Connection(const ServerInfo& si);
-    Connection(QString h, unsigned short p);
+    Connection(QString h, quint16 p);
     virtual ~Connection();
 
     ServerInfo server() const;
     void setServer(ServerInfo& si);
-    void setServer(QString h, unsigned short p);
+    void setServer(QString h, quint16 p);
 
     void connect();
     void disconnect();

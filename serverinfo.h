@@ -11,14 +11,14 @@ namespace QIRC {
   /// \brief Utility class to store a server address
   class ServerInfo {
   public:
-    ServerInfo(QString host, unsigned short port);
+    ServerInfo(QString host, quint16 port);
     ServerInfo(const ServerInfo& o);
     
     QString host();
     void setHost(QString h);
 
-    unsigned short port();
-    void setPort(unsigned short p);
+    quint16 port();
+    void setPort(quint16 p);
 
     QString toString();
 
@@ -30,7 +30,7 @@ namespace QIRC {
     QString m_host;
 
     /// \brief Port number to connect to
-    unsigned short m_port;
+    quint16 m_port;
 
   };
 };
