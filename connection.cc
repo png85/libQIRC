@@ -120,7 +120,7 @@ bool Connection::setupSocket() {
 void Connection::socket_connected() {
   // authenticate to server if we have a password set for
   // the connection
-  authenticateConnection();
+  authenticate();
 
   emit connected(m_currentServer);
 }
@@ -203,7 +203,7 @@ void Connection::sendMessage(QString msg) {
 ///
 /// If m_serverPassword is set this method will send a PASS
 /// message to the server to authenticate with a password.
-void Connection::authenticateConnection() {
+void Connection::authenticate() {
   if (m_serverPassword.length() > 0) {
     sendMessage("PASS " + m_serverPassword);
   }

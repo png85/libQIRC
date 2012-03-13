@@ -51,7 +51,7 @@ namespace QIRC {
 
     void sendMessage(QString msg);
 
-    void authenticateConnection();
+    void authenticate();
 
   protected slots:
     void socket_connected();
