@@ -207,5 +207,9 @@ void Connection::authenticateConnection() {
   if (m_serverPassword.length() > 0) {
     sendMessage("PASS " + m_serverPassword);
   }
+
+  // USER username hostname servername: realname
+  sendMessage("USER " + m_ident + " " + m_currentServer.host() + " "
+	      + m_currentServer.host() + ": QIRC");
 }
 
