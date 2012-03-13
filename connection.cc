@@ -4,7 +4,8 @@ using namespace QIRC;
 
 /// \brief Construct without server information
 Connection::Connection() :
-  m_currentServer("127.0.0.1", 6667), m_socket(NULL) {
+  m_currentServer("127.0.0.1", 6667), m_socket(NULL),
+  m_ident("QIRC"), m_nick("QIRC") {
   if (!setupSocket()) {
     qCritical() << "Connection: Unable to setup m_socket!";
     exit(1);
@@ -14,7 +15,8 @@ Connection::Connection() :
 
 /// \brief Construct from given ServerInfo
 Connection::Connection(const ServerInfo& si) :
-  m_currentServer(si), m_socket(NULL) {
+  m_currentServer(si), m_socket(NULL),
+  m_ident("QIRC"), m_nick("QIRC") {
   if (!setupSocket()) {
     qCritical() << "Connection: Unable to setup m_socket!";
     exit(1);
@@ -24,7 +26,8 @@ Connection::Connection(const ServerInfo& si) :
 
 /// \brief Construct from host/port
 Connection::Connection(QString h, quint16 p) :
-  m_currentServer(h, p), m_socket(NULL) {
+  m_currentServer(h, p), m_socket(NULL),
+  m_ident("QIRC"), m_nick ("QIRC") {
   if (!setupSocket()) {
     qCritical() << "Connection: Unable to setup m_socket!";
     exit(1);
@@ -155,5 +158,25 @@ void Connection::socket_readyRead() {
       qDebug() << line;
     }
   }
+}
+
+
+void Connection::setIdent(QString ident) {
+  m_ident = ident;
+}
+
+
+QString Connection::ident() {
+  return m_ident;
+}
+
+
+void Connection::setNick(QString nick) {
+  m_nick = nick;
+}
+
+
+QString Connection::nick() {
+  return m_nick;
 }
 

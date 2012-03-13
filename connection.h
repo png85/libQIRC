@@ -21,6 +21,12 @@ namespace QIRC {
     void setServer(ServerInfo& si);
     void setServer(QString h, quint16 p);
 
+    QString ident();
+    void setIdent(QString ident);
+
+    QString nick();
+    void setNick(QString nick);
+
     void connect();
     void disconnect();
 
@@ -30,6 +36,12 @@ namespace QIRC {
 
     /// \brief TCP socket for connection to server
     QTcpSocket* m_socket;
+
+    /// \brief ident username
+    QString m_ident;
+
+    /// \brief Current nickname
+    QString m_nick;
 
   protected slots:
     void socket_connected();
