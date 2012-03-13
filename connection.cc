@@ -67,7 +67,7 @@ ServerInfo Connection::server() const {
 ///
 /// \attention This method will disconnect from the current
 /// server and connect to the new one if they differ.
-void Connection::setServer(ServerInfo& si) {
+void Connection::setServer(const ServerInfo& si) {
   if (si != m_currentServer) {
     disconnect();
     m_currentServer = si;

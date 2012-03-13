@@ -18,7 +18,7 @@ namespace QIRC {
     virtual ~Connection();
 
     ServerInfo server() const;
-    void setServer(ServerInfo& si);
+    void setServer(const ServerInfo& si);
     void setServer(QString h, quint16 p);
 
     QString serverPassword();
