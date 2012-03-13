@@ -109,15 +109,13 @@ bool Connection::setupSocket() {
 
 /// \brief Slot for m_socket::connected()
 void Connection::socket_connected() {
-  qDebug() << "Connection::m_socket connected to"
-	   << m_currentServer.toString();
+  emit connected(m_currentServer);
 }
 
 
 /// \brief Slot for m_socket::disconnected()
 void Connection::socket_disconnected() {
-  qDebug() << "Connection::m_socket disconnected from"
-	   << m_currentServer.toString();
+  emit disconnected(m_currentServer);
 }
 
 

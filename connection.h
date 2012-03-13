@@ -46,6 +46,20 @@ namespace QIRC {
     /// \param msg Error message in human-readable form
     void socketError(QAbstractSocket::SocketError err, QString msg);
 
+
+    /// \brief Connection to IRC server established
+    ///
+    /// \param si ServerInfo object describing the server to which the
+    /// connection was established
+    void connected(ServerInfo si);
+
+
+    /// \brief Connection to IRC server dropped
+    ///
+    /// \param si ServerInfo object with the server that got disconnected
+    void disconnected(ServerInfo si);
+
+
   private:
     bool setupSocket();
   };
