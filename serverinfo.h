@@ -22,6 +22,7 @@ namespace QIRC {
 
     QString toString();
 
+    ServerInfo& operator =(const ServerInfo& o);
     bool operator ==(const ServerInfo& o) const;
     bool operator !=(const ServerInfo& o) const;
 

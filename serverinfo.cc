@@ -63,3 +63,15 @@ bool ServerInfo::operator !=(const ServerInfo& o) const {
   return !((*this) == o);
 }
 
+
+/// \brief Assignment operator
+///
+/// Copies the host/port info from another ServerInfo instance.
+ServerInfo& ServerInfo::operator =(const ServerInfo& o) {
+  if (this != &o) {
+    m_host = o.m_host;
+    m_port = o.m_port;
+  }
+
+  return (*this);
+}
