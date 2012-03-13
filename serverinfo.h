@@ -5,6 +5,7 @@
 #ifndef SERVERINFO_H
 #define SERVERINFO_H
 
+#include <QDebug>
 #include <QString>
 
 namespace QIRC {
@@ -35,5 +36,8 @@ namespace QIRC {
 
   };
 };
+
+
+QDebug& operator <<(QDebug& dbg, const QIRC::ServerInfo& si);
 
 #endif // !SERVERINFO_H

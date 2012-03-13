@@ -75,3 +75,15 @@ ServerInfo& ServerInfo::operator =(const ServerInfo& o) {
 
   return (*this);
 }
+
+
+/// \brief Output a ServerInfo to a QDebug stream
+///
+/// Creates a string in the form of 'host:port' and sends it to
+/// the given debug stream.
+QDebug& operator <<(QDebug& dbg, const ServerInfo& si) {
+  QString tmp = si.host() + ":" + QString::number(si.port());
+  
+  return (dbg << tmp);
+}
+

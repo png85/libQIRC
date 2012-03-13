@@ -155,9 +155,8 @@ void Connection::socket_disconnected() {
 /// \param err Socket error as received from m_socket's error() signal
 void Connection::socket_error(QAbstractSocket::SocketError err) {
   QString msg = m_socket->errorString();
-  qWarning() << "Connection::m_socket (connected to"
-	     << m_currentServer.toString() << ") generated an error: "
-	     << msg;
+  qWarning() << "Connection::m_socket (connected to" << m_currentServer
+	     << ") generated an error: " << msg;
   emit socketError(err, msg);
 }
 
