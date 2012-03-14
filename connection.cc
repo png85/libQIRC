@@ -280,7 +280,7 @@ bool Connection::parseMessage(QString msg) {
     QString serverName = tmp.value(1);
     QString message = tmp.value(2);
 
-    // TODO(png): define+emit signal!
+    emit irc_notice_auth(serverName, message);
 
     return true;
   }

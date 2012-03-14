@@ -103,6 +103,15 @@ namespace QIRC {
     /// \param serverName Server name as sent by the IRC server
     void irc_ping(QString serverName);
 
+    /// \brief Got NOTICE AUTH message
+    ///
+    /// This signal gets emitted whenever we receive a NOTICE AUTH message/
+    /// from the server.
+    ///
+    /// \param serverName Server name as sent by the server
+    /// \param message Message contents as string
+    void irc_notice_auth(QString serverName, QString message);
+
 
   private:
     bool setupSocket();
