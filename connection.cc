@@ -293,7 +293,7 @@ bool Connection::parseMessage(QString msg) {
     QString target = tmp.value(3);
     QString message = tmp.value(4);
 
-    // TODO(png): define+emit signal!
+    // TODO(png): handle numeric messages according to RFC1459
 
     return true;
   }
@@ -317,7 +317,7 @@ bool Connection::parseMessage(QString msg) {
     QString target = tmp.value(4);
     QString modeString = tmp.value(5);
 
-    // TODO(png): define+emit signals!
+    // TODO(png): emit signals for user/channel modes separately
 
     return true;
   }
@@ -326,8 +326,10 @@ bool Connection::parseMessage(QString msg) {
   static const QRegExp rePING("^PING :(.+)$");
   if (rePING.exactMatch(msg)) {
     QString serverName = rePING.capturedTexts().value(1);
+
     sendPong(serverName);
     emit irc_ping(serverName);
+
     return true;
   }
 
