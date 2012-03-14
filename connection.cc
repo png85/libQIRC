@@ -327,6 +327,7 @@ bool Connection::parseMessage(QString msg) {
   if (rePING.exactMatch(msg)) {
     QString serverName = rePING.capturedTexts().value(1);
     sendPong(serverName);
+    emit irc_ping(serverName);
     return true;
   }
 

@@ -94,6 +94,15 @@ namespace QIRC {
     /// \param si ServerInfo object with the server that got disconnected
     void disconnected(QIRC::ServerInfo si);
 
+    /// \brief Got IRC PING message
+    ///
+    /// This signal gets emitted whenever we receive a PING message from
+    /// the IRC server.
+    /// The PONG response to this message is sent automatically.
+    ///
+    /// \param serverName Server name as sent by the IRC server
+    void irc_ping(QString serverName);
+
 
   private:
     bool setupSocket();
