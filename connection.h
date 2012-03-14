@@ -84,13 +84,13 @@ namespace QIRC {
     ///
     /// \param si ServerInfo object describing the server to which the
     /// connection was established
-    void connected(ServerInfo si);
+    void connected(QIRC::ServerInfo si);
 
 
     /// \brief Connection to IRC server dropped
     ///
     /// \param si ServerInfo object with the server that got disconnected
-    void disconnected(ServerInfo si);
+    void disconnected(QIRC::ServerInfo si);
 
 
   private:
