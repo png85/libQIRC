@@ -63,6 +63,8 @@ namespace QIRC {
     bool parseMessage(QString msg);
     void authenticate();
 
+    void sendPong(QString serverName);
+
   protected slots:
     void socket_connected();
     void socket_disconnected();

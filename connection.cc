@@ -1,3 +1,6 @@
+#include <QRegExp>
+#include <QStringList>
+
 #include "Connection"
 
 using namespace QIRC;
@@ -268,6 +271,21 @@ bool Connection::isConnected() const {
 }
 
 
+/// \brief Parse incoming message
 bool Connection::parseMessage(QString msg) {
+  // PING: <servername>
+  static const QRegExp rePING("^PING :(.+)$");
+  if (rePING.exactMatch(msg)) {
+    QString serverName = rePING.capturedTexts().value(1);
+    sendPong(serverName);
+    return true;
+  }
+
   return false;
+}
+
+
+/// \brief Send PONG response to PING command
+void Connection::sendPong(QString serverName) {
+  sendMessage("PONG " + serverName);
 }
