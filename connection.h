@@ -60,7 +60,7 @@ namespace QIRC {
     QString m_realName;
 
     void sendMessage(QString msg);
-
+    bool parseMessage(QString msg);
     void authenticate();
 
   protected slots:

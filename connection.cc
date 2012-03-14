@@ -168,7 +168,9 @@ void Connection::socket_readyRead() {
   while (m_socket->canReadLine()) {
     line = m_socket->readLine();
     if (!line.isNull()) {
-      qDebug() << line;
+      if (!parseMessage(line.trimmed())) {
+	qDebug() << "Unable to parse message:" << line.trimmed();
+      }
     }
   }
 }
@@ -263,4 +265,9 @@ void Connection::authenticate() {
 /// \brief Are we currently connected?
 bool Connection::isConnected() const {
   return m_connected;
+}
+
+
+bool Connection::parseMessage(QString msg) {
+  return false;
 }
