@@ -305,7 +305,7 @@ bool Connection::parseMessage(QString msg) {
     QString target = tmp.value(4);
     QString message = tmp.value(5);
 
-    // TODO(png): define+emit signal!
+    emit irc_notice(sender, target, message);
 
     return true;
   }

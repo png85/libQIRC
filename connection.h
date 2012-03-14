@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QTcpSocket>
 #include "ServerInfo"
+#include "HostMask"
 
 namespace QIRC {
   /// \brief Connection to an IRC server
@@ -112,6 +113,16 @@ namespace QIRC {
     /// \param message Message contents as string
     void irc_notice_auth(QString serverName, QString message);
 
+    /// \brief Got NOTICE message
+    ///
+    /// This signal gets emitted whenever we receive a NOTICE message.
+    /// A NOTICE can be either sent to a single client or a whole channel
+    /// which is indicated by the 'target' parameter.
+    ///
+    /// \param sender Host mask of the NOTICEs sender
+    /// \param target Nick or channel name that the notice was sent to
+    /// \param message Message text as string
+    void irc_notice(QIRC::HostMask sender, QString target, QString message);
 
   private:
     bool setupSocket();
