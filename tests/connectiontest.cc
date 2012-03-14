@@ -1,7 +1,8 @@
 #include <QDebug>
 #include "connectiontest.h"
 
-ConnectionTest::ConnectionTest(QObject* parent) : QObject(parent) {
+ConnectionTest::ConnectionTest(QObject* parent) : QObject(parent),
+						  m_connection(NULL) {
 }
 
 void ConnectionTest::conn_connected(QIRC::ServerInfo si) {
