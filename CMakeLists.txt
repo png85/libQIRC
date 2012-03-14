@@ -63,3 +63,8 @@ add_executable(test_serverinfo-operators tests/serverinfo-operators.cc)
 target_link_libraries(test_serverinfo-operators QIRC ${QT_LIBRARIES})
 add_test(NAME "ServerInfo:operators" COMMAND test_serverinfo-operators)
 
+QT4_WRAP_CPP(test_connection_moc_sources tests/connectiontest.h)
+add_executable(test_connection tests/connection.cc tests/connectiontest.cc
+  ${test_connection_moc_sources})
+target_link_libraries(test_connection QIRC ${QT_LIBRARIES})
+add_test(NAME "Connection" COMMAND test_connection)
