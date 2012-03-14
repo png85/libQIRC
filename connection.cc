@@ -1,6 +1,7 @@
 #include <QRegExp>
 #include <QStringList>
 
+#include "HostMask"
 #include "Connection"
 
 using namespace QIRC;
@@ -273,6 +274,54 @@ bool Connection::isConnected() const {
 
 /// \brief Parse incoming message
 bool Connection::parseMessage(QString msg) {
+  static const QRegExp reNOTICE_AUTH("^:(.+) NOTICE AUTH :(.+)$");
+  if (reNOTICE_AUTH.exactMatch(msg)) {
+    QStringList tmp = reNOTICE_AUTH.capturedTexts();
+    QString serverName = tmp.value(1);
+    QString message = tmp.value(2);
+
+    // TODO(png): define+emit signal!
+
+    return true;
+  }
+
+  static const QRegExp reNumeric(":(.+) ([0-9]{3}) (.+) :(.+)$");
+  if (reNumeric.exactMatch(msg)) {
+    QStringList tmp = reNumeric.capturedTexts();
+    QString serverName = tmp.value(1);
+    int messageNumber = tmp.value(2).toInt();
+    QString target = tmp.value(3);
+    QString message = tmp.value(4);
+
+    // TODO(png): define+emit signal!
+
+    return true;
+  }
+
+  static const QRegExp reNOTICE(":(.+)!(.+)@(.+) NOTICE ([\\w#\\-]+) :(.+)$");
+  if (reNOTICE.exactMatch(msg)) {
+    QStringList tmp = reNOTICE.capturedTexts();
+    HostMask sender(tmp.value(1), tmp.value(2), tmp.value(3));
+    QString target = tmp.value(4);
+    QString message = tmp.value(5);
+
+    // TODO(png): define+emit signal!
+
+    return true;
+  }
+
+  static const QRegExp reMODE(":(.+)!(.+)@(.+) MODE ([\\w#\\-]+) :(.+)$");
+  if (reMODE.exactMatch(msg)) {
+    QStringList tmp = reMODE.capturedTexts();
+    HostMask sender(tmp.value(1), tmp.value(2), tmp.value(3));
+    QString target = tmp.value(4);
+    QString modeString = tmp.value(5);
+
+    // TODO(png): define+emit signals!
+
+    return true;
+  }
+
   // PING: <servername>
   static const QRegExp rePING("^PING :(.+)$");
   if (rePING.exactMatch(msg)) {
