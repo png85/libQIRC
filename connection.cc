@@ -10,11 +10,18 @@ using namespace QIRC;
 Connection::Connection() :
   m_currentServer("127.0.0.1", 6667), m_socket(NULL),
   m_serverPassword(""), m_connected(false),
-  m_ident("QIRC"), m_nick("QIRC"), m_realName("QIRC") {
+  m_ident("QIRC"), m_nick("QIRC"), m_realName("QIRC"),
+  m_tMessageQueue(NULL) {
   if (!setupSocket()) {
     qCritical() << "Connection: Unable to setup m_socket!";
     exit(1);
   }
+
+  if (!setupMessageQueue()) {
+    qCritical() << "Connection: Unable to setup m_tMessageQueue!";
+    exit(1);
+  }
+
 }
 
 
@@ -22,11 +29,18 @@ Connection::Connection() :
 Connection::Connection(const ServerInfo& si) :
   m_currentServer(si), m_socket(NULL),
   m_serverPassword(""), m_connected(false),
-  m_ident("QIRC"), m_nick("QIRC"), m_realName("QIRC") {
+  m_ident("QIRC"), m_nick("QIRC"), m_realName("QIRC"),
+  m_tMessageQueue(NULL) {
   if (!setupSocket()) {
     qCritical() << "Connection: Unable to setup m_socket!";
     exit(1);
   }
+
+  if (!setupMessageQueue()) {
+    qCritical() << "Connection: Unable to setup m_tMessageQueue!";
+    exit(1);
+  }
+
 }
 
 
@@ -34,15 +48,26 @@ Connection::Connection(const ServerInfo& si) :
 Connection::Connection(QString h, quint16 p) :
   m_currentServer(h, p), m_socket(NULL),
   m_serverPassword(""), m_connected(false),
-  m_ident("QIRC"), m_nick ("QIRC"), m_realName("QIRC") {
+  m_ident("QIRC"), m_nick ("QIRC"), m_realName("QIRC"),
+  m_tMessageQueue(NULL) {
   if (!setupSocket()) {
     qCritical() << "Connection: Unable to setup m_socket!";
     exit(1);
   }
+
+  if (!setupMessageQueue()) {
+    qCritical() << "Connection: Unable to setup m_tMessageQueue!";
+    exit(1);
+  }
+
 }
 
 
 Connection::~Connection() {
+  if (m_tMessageQueue != NULL) {
+    delete m_tMessageQueue;
+  }
+
   if (m_socket != NULL) {
     delete m_socket;
   }
@@ -144,6 +169,7 @@ void Connection::socket_connected() {
 
 /// \brief Slot for m_socket::disconnected()
 void Connection::socket_disconnected() {
+  m_messageQueue.clear();
   m_connected = false;
   emit disconnected(m_currentServer);
 }
@@ -229,10 +255,22 @@ QString Connection::realName() const {
 
 
 /// \brief Send message to server
-void Connection::sendMessage(QString msg) {
+///
+/// Sends the given message to the IRC server. A message can be either
+/// queued or sent right away. The message Queue is checked by m_tMessageQueue
+/// every 10ms.
+///
+/// \param msg Message text
+/// \param queued Flag to indicate wether the message should be queued
+/// or sent right away
+void Connection::sendMessage(QString msg, bool queued=true) {
   if (m_connected) {
-    QTextStream s(m_socket);
-    s << msg.trimmed() << "\n";
+    if (!queued) {
+      QTextStream s(m_socket);
+      s << msg.trimmed() << "\n";
+    } else {
+      m_messageQueue.append(msg.trimmed() + "\n");
+    }
   } else {
     qWarning() << "Tried to use Connection::sendMessage() while "
 	       << "m_connected!=true! Message was:" << msg.trimmed();
@@ -254,15 +292,15 @@ void Connection::authenticate() {
   }
 
   if (m_serverPassword.length() > 0) {
-    sendMessage("PASS " + m_serverPassword);
+    sendMessage("PASS " + m_serverPassword, false);
   }
 
   // USER username hostname servername: realname
   sendMessage("USER " + m_ident + " " + m_currentServer.host() + " "
-	      + m_currentServer.host() + ": " + m_realName);
+	      + m_currentServer.host() + ": " + m_realName, false);
 
   // NICK nickname
-  sendMessage("NICK " + m_nick);
+  sendMessage("NICK " + m_nick, false);
 }
 
 
@@ -339,5 +377,39 @@ bool Connection::parseMessage(QString msg) {
 
 /// \brief Send PONG response to PING command
 void Connection::sendPong(QString serverName) {
-  sendMessage("PONG " + serverName);
+  sendMessage("PONG " + serverName, false);
+}
+
+
+/// \brief Setup queue for outbound messages
+bool Connection::setupMessageQueue() {
+  try {
+    m_tMessageQueue = new QTimer(this);
+  }
+
+  catch (std::bad_alloc& ex) {
+    qCritical() << "Unable to allocate memory for "
+		<< "Connection::m_tMessageQueue:" << ex.what();
+    return false;
+  }
+
+  m_tMessageQueue->setInterval(10);
+  QObject::connect(m_tMessageQueue, SIGNAL(timeout()),
+		   this, SLOT(timer_messageQueue()));
+
+  return true;
+}
+
+
+/// \brief Slot for m_tMessageQueue::timeout()
+///
+/// This slot is connected to the timeout() signal of m_tMessageQueue.
+/// It fetches the first message from the queue and sends it to the IRC
+/// server. If no messages are queued it simply does nothing.
+void Connection::timer_messageQueue() {
+  if (!m_messageQueue.isEmpty()) {
+    QString message = m_messageQueue.takeFirst();
+    QTextStream s(m_socket);
+    s << message;
+  }
 }

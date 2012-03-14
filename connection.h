@@ -3,6 +3,9 @@
 
 #include <QObject>
 #include <QTcpSocket>
+#include <QTimer>
+#include <QStringList>
+
 #include "ServerInfo"
 #include "HostMask"
 
@@ -60,7 +63,13 @@ namespace QIRC {
     /// \brief Real name to use on IRC
     QString m_realName;
 
-    void sendMessage(QString msg);
+    /// \brief Queue for outgoing IRC messages
+    QStringList m_messageQueue;
+
+    /// \brief Timer to send queued messages
+    QTimer* m_tMessageQueue;
+
+    void sendMessage(QString msg, bool queued);
     bool parseMessage(QString msg);
     void authenticate();
 
@@ -71,6 +80,7 @@ namespace QIRC {
     void socket_disconnected();
     void socket_error(QAbstractSocket::SocketError);
     void socket_readyRead();
+    void timer_messageQueue();
 
   signals:
     /// \brief TCP/IP socket error
@@ -126,6 +136,8 @@ namespace QIRC {
 
   private:
     bool setupSocket();
+    bool setupMessageQueue();
+
   };
 };
 
