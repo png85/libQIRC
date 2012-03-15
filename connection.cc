@@ -163,13 +163,19 @@ void Connection::socket_connected() {
   // the connection
   authenticate();
 
+  // start timer for outbound message queue
+  m_tMessageQueue->start();
+
   emit connected(m_currentServer);
 }
 
 
 /// \brief Slot for m_socket::disconnected()
 void Connection::socket_disconnected() {
+  // stop timer for outbound message queue and clear the queue
+  m_tMessageQueue->stop();
   m_messageQueue.clear();
+
   m_connected = false;
   emit disconnected(m_currentServer);
 }
