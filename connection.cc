@@ -354,6 +354,18 @@ bool Connection::parseMessage(QString msg) {
     return true;
   }
 
+  static const QRegExp rePRIVMSG(":(.+)!(.+)@(.+) PRIVMSG ([\\w#\\-]+) :(.+$)");
+  if (rePRIVMSG.exactMatch(msg)) {
+    QStringList tmp = rePRIVMSG.capturedTexts();
+    HostMask sender(tmp.value(1), tmp.value(2), tmp.value(3));
+    QString target = tmp.value(4);
+    QString message = tmp.value(5);
+
+    emit irc_privmsg(sender, target, message);
+
+    return true;
+  }
+
   static const QRegExp reMODE(":(.+)!(.+)@(.+) MODE ([\\w#\\-]+) :(.+)$");
   if (reMODE.exactMatch(msg)) {
     QStringList tmp = reMODE.capturedTexts();

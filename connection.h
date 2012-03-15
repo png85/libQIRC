@@ -134,6 +134,18 @@ namespace QIRC {
     /// \param message Message text as string
     void irc_notice(QIRC::HostMask sender, QString target, QString message);
 
+
+    /// \brief Got PRIVMSG
+    ///
+    /// This signal gets emitted whenever we receive a PRIVMSG line from the
+    /// IRC server. This can be either a private message to the client itself
+    /// or to a channel.
+    ///
+    /// \param sender Host mask of the PRIVMSGs sender
+    /// \param target Nick or channel that the message was directed at
+    /// \param message Message text as string
+    void irc_privmsg(QIRC::HostMask sender, QString target, QString message);
+
   private:
     bool setupSocket();
     bool setupMessageQueue();
