@@ -373,7 +373,7 @@ bool Connection::parseMessage(QString msg) {
     QString target = tmp.value(4);
     QString modeString = tmp.value(5);
 
-    // TODO(png): emit signals for user/channel modes separately
+    emit irc_mode(sender, target, modeString);
 
     return true;
   }

@@ -146,6 +146,9 @@ namespace QIRC {
     /// \param message Message text as string
     void irc_privmsg(QIRC::HostMask sender, QString target, QString message);
 
+
+    void irc_mode(QIRC::HostMask sender, QString target, QString modeString);
+
   private:
     bool setupSocket();
     bool setupMessageQueue();
