@@ -18,6 +18,7 @@ class ConnectionTest : public QObject {
   protected slots:
   void conn_connected(QIRC::ServerInfo si);
   void conn_disconnected(QIRC::ServerInfo si);
+  void conn_privmsg(QIRC::HostMask sender, QString target, QString message);
 
  signals:
   void finished();

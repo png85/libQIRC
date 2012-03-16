@@ -8,6 +8,7 @@ ConnectionTest::ConnectionTest(QObject* parent) : QObject(parent),
 void ConnectionTest::conn_connected(QIRC::ServerInfo si) {
   qDebug() << "Connected to" << si;
   m_connection->setNick("TEST234");
+  m_connection->joinChannel("#das-system");
 }
 
 void ConnectionTest::conn_disconnected(QIRC::ServerInfo si) {
@@ -31,6 +32,19 @@ void ConnectionTest::run() {
 		   this, SLOT(conn_connected(QIRC::ServerInfo)));
   QObject::connect(m_connection, SIGNAL(disconnected(QIRC::ServerInfo)),
 		   this, SLOT(conn_disconnected(QIRC::ServerInfo)));
+  QObject::connect(m_connection, SIGNAL(irc_privmsg(QIRC::HostMask,
+						    QString, QString)),
+		   this, SLOT(conn_privmsg(QIRC::HostMask, QString, QString)));
 
   m_connection->connect();
+}
+
+
+void ConnectionTest::conn_privmsg(QIRC::HostMask sender,
+				  QString target, QString message) {
+  qDebug() << "Got PRIVMSG from" << sender << "to" 
+	   << target << ":" << message;
+  if (message.trimmed() == "!die") {
+    m_connection->quit("Goodbye!", true);
+  }
 }
