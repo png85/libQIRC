@@ -489,7 +489,7 @@ void Connection::partChannel(QString channel) {
 
 void Connection::quit(QString message, bool disconnect) {
   if (isConnected()) {
-    sendMessage("QUIT :" + message);
+    sendMessage("QUIT :" + message, false);
     if (disconnect) {
       this->disconnect();
     }
