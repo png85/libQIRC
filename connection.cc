@@ -342,7 +342,7 @@ bool Connection::parseMessage(QString msg) {
     return true;
   }
 
-  static const QRegExp reNumeric(":(.+) ([0-9]{3}) (.+) :(.+)$");
+  static const QRegExp reNumeric("^:(.+) ([0-9]{3}) (.+) :(.+)$");
   if (reNumeric.exactMatch(msg)) {
     QStringList tmp = reNumeric.capturedTexts();
     QString serverName = tmp.value(1);
@@ -355,7 +355,7 @@ bool Connection::parseMessage(QString msg) {
     return true;
   }
 
-  static const QRegExp reNOTICE(":(.+)!(.+)@(.+) NOTICE ([\\w#\\-]+) :(.+)$");
+  static const QRegExp reNOTICE("^:(.+)!(.+)@(.+) NOTICE ([\\w#\\-]+) :(.+)$");
   if (reNOTICE.exactMatch(msg)) {
     QStringList tmp = reNOTICE.capturedTexts();
     HostMask sender(tmp.value(1), tmp.value(2), tmp.value(3));
@@ -367,7 +367,7 @@ bool Connection::parseMessage(QString msg) {
     return true;
   }
 
-  static const QRegExp rePRIVMSG(":(.+)!(.+)@(.+) PRIVMSG ([\\w#\\-]+) :(.+$)");
+  static const QRegExp rePRIVMSG("^:(.+)!(.+)@(.+) PRIVMSG ([\\w#\\-]+) :(.+$)");
   if (rePRIVMSG.exactMatch(msg)) {
     QStringList tmp = rePRIVMSG.capturedTexts();
     HostMask sender(tmp.value(1), tmp.value(2), tmp.value(3));
@@ -379,7 +379,7 @@ bool Connection::parseMessage(QString msg) {
     return true;
   }
 
-  static const QRegExp reMODE(":(.+)!(.+)@(.+) MODE ([\\w#\\-]+) :(.+)$");
+  static const QRegExp reMODE("^:(.+)!(.+)@(.+) MODE ([\\w#\\-]+) :(.+)$");
   if (reMODE.exactMatch(msg)) {
     QStringList tmp = reMODE.capturedTexts();
     HostMask sender(tmp.value(1), tmp.value(2), tmp.value(3));
@@ -391,7 +391,7 @@ bool Connection::parseMessage(QString msg) {
     return true;
   }
 
-  static const QRegExp reNICK(":(.+)!(.+)@(.+) NICK :(.+)$");
+  static const QRegExp reNICK("^:(.+)!(.+)@(.+) NICK :(.+)$");
   if (reNICK.exactMatch(msg)) {
     QStringList tmp = reNICK.capturedTexts();
     HostMask sender(tmp.value(1), tmp.value(2), tmp.value(3));
