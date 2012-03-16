@@ -418,6 +418,12 @@ bool Connection::parseMessage(QString msg) {
     HostMask sender(tmp.value(1), tmp.value(2), tmp.value(3));
     QString channel = tmp.value(4);
 
+    if (sender.nick() != m_nick) {
+      emit irc_join(sender, channel);
+    } else {
+      emit partedChannel(channel);
+    }
+
     return true;
   }
 
@@ -426,6 +432,12 @@ bool Connection::parseMessage(QString msg) {
     QStringList tmp = rePART.capturedTexts();
     HostMask sender(tmp.value(1), tmp.value(2), tmp.value(3));
     QString channel = tmp.value(4);
+
+    if (sender.nick() != m_nick) {
+      emit irc_part(sender, channel);
+    } else {
+      emit partedChannel(channel);
+    }
 
     return true;
   }

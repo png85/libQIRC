@@ -175,6 +175,12 @@ namespace QIRC {
     /// \param newNick New nickname of the user as string
     void irc_nick(QIRC::HostMask sender, QString newNick);
 
+    void joinedChannel(QString channel);
+    void partedChannel(QString channel);
+
+    void irc_join(QIRC::HostMask user, QString channel);
+    void irc_part(QIRC::HostMask user, QString channel);
+
   private:
     bool setupSocket();
     bool setupMessageQueue();
