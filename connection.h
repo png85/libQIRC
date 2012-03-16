@@ -181,6 +181,9 @@ namespace QIRC {
     void irc_join(QIRC::HostMask user, QString channel);
     void irc_part(QIRC::HostMask user, QString channel);
 
+    void irc_channelInfo(QString channel, QIRC::HostMask creator,
+			 quint32 ts);
+
   private:
     bool setupSocket();
     bool setupMessageQueue();

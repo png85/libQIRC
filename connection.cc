@@ -453,6 +453,21 @@ bool Connection::parseMessage(QString msg) {
     return true;
   }
 
+  static const QRegExp
+    reChannelInfo("^:(.+) 333 (.+) (.+) (.+)!(.+)@(.+) ([0-9]+)$");
+  if (reChannelInfo.exactMatch(msg)) {
+    QStringList tmp = reChannelInfo.capturedTexts();
+    QString serverName = tmp.value(1);
+    QString target = tmp.value(2);
+    QString channel = tmp.value(3);
+    HostMask creator(tmp.value(4), tmp.value(5), tmp.value(6));
+    quint32 channelTS = tmp.value(7).toInt();
+
+    emit irc_channelInfo(channel, creator, channelTS);
+
+    return true;
+  }
+
   return false;
 }
 
