@@ -175,12 +175,54 @@ namespace QIRC {
     /// \param newNick New nickname of the user as string
     void irc_nick(QIRC::HostMask sender, QString newNick);
 
+    /// \brief Successfully joined channel
+    ///
+    /// This signal is emitted whenever we successfully joined a channel
+    /// on IRC.
+    ///
+    /// \param channel Channel name a string
     void joinedChannel(QString channel);
+
+
+    /// \brief Successfully left channel
+    ///
+    /// This signal is emitted whenever we successfully left a channel
+    /// on IRC.
+    ///
+    /// \param channel Channel name as string
     void partedChannel(QString channel);
 
+
+    /// \brief User joined channel
+    ///
+    /// This signal is emitted when another user joined a channel that
+    /// we're currently listening to.
+    ///
+    /// \param user Host mask of the newly joined user
+    /// \param channel Channel name as string
     void irc_join(QIRC::HostMask user, QString channel);
+
+
+    /// \brief User left channel
+    ///
+    /// This signal is emitted when another user left a channel that we're
+    /// currently listening to.
+    ///
+    /// \param user Host mask of the user that left
+    /// \param channel Channel name as string
     void irc_part(QIRC::HostMask user, QString channel);
 
+    /// \brief Channel creation info
+    ///
+    /// This signal is emitted whenever we receive a message giving
+    /// additional information about a channel's creation date etc.
+    ///
+    /// \attention This is most likely IRCd-specific; currently only
+    /// tested to work with ircd-hybrid
+    ///
+    /// \param channel Channel name as string
+    /// \param creator Host mask of the user that created the channel
+    /// \param ts Timestamp of channel creation
     void irc_channelInfo(QString channel, QIRC::HostMask creator,
 			 quint32 ts);
 

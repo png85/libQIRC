@@ -512,6 +512,7 @@ void Connection::timer_messageQueue() {
 }
 
 
+/// \brief Attempt to join a channel
 void Connection::joinChannel(QString channel) {
   if (isConnected()) {
     sendMessage("JOIN " + channel);
@@ -522,6 +523,7 @@ void Connection::joinChannel(QString channel) {
 }
 
 
+/// \brief Attempt to leave a channel
 void Connection::partChannel(QString channel) {
   if (isConnected()) {
     sendMessage("PART " + channel);
@@ -532,11 +534,23 @@ void Connection::partChannel(QString channel) {
 }
 
 
+/// \brief Quit IRC
+///
+/// Sends a QUIT message to the IRC server and thereby disconnects
+/// from it.
+///
+/// \param message Message text to use in QUIT command
+/// \param disconnect Flag that indicates wether we want to immediately
+/// disconnect after sending the QUIT command instead of waiting for
+/// the server to close the connection.
 void Connection::quit(QString message, bool disconnect) {
   if (isConnected()) {
     sendMessage("QUIT :" + message, false);
     if (disconnect) {
       this->disconnect();
     }
+  } else {
+    qWarning() << "Tried to use Connection::quit() on a Connection "
+	       << "instance that isn't currently connected!";
   }
 }
