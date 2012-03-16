@@ -11,6 +11,7 @@ Connection::Connection() :
   m_currentServer("127.0.0.1", 6667), m_socket(NULL),
   m_serverPassword(""), m_connected(false),
   m_ident("QIRC"), m_nick("QIRC"), m_realName("QIRC"),
+  m_desiredNick(""),
   m_tMessageQueue(NULL) {
   if (!setupSocket()) {
     qCritical() << "Connection: Unable to setup m_socket!";
@@ -30,6 +31,7 @@ Connection::Connection(const ServerInfo& si) :
   m_currentServer(si), m_socket(NULL),
   m_serverPassword(""), m_connected(false),
   m_ident("QIRC"), m_nick("QIRC"), m_realName("QIRC"),
+  m_desiredNick(""),
   m_tMessageQueue(NULL) {
   if (!setupSocket()) {
     qCritical() << "Connection: Unable to setup m_socket!";
@@ -49,6 +51,7 @@ Connection::Connection(QString h, quint16 p) :
   m_currentServer(h, p), m_socket(NULL),
   m_serverPassword(""), m_connected(false),
   m_ident("QIRC"), m_nick ("QIRC"), m_realName("QIRC"),
+  m_desiredNick(""),
   m_tMessageQueue(NULL) {
   if (!setupSocket()) {
     qCritical() << "Connection: Unable to setup m_socket!";
@@ -237,8 +240,18 @@ QString Connection::ident() const {
 
 
 /// \brief Set nickname to new value
+///
+/// Changes the current IRC nickname used on this connection. If we're
+/// currently connected to a server, a matching NICK message is sent.
+///
+/// \param nick New nickname
 void Connection::setNick(QString nick) {
-  m_nick = nick;
+  if (!isConnected()) {
+    m_nick = nick;
+  } else {
+    m_desiredNick = nick;
+    sendMessage("NICK " + m_desiredNick);
+  }
 }
 
 
@@ -269,7 +282,7 @@ QString Connection::realName() const {
 /// \param msg Message text
 /// \param queued Flag to indicate wether the message should be queued
 /// or sent right away
-void Connection::sendMessage(QString msg, bool queued=true) {
+void Connection::sendMessage(QString msg, bool queued) {
   if (m_connected) {
     if (!queued) {
       QTextStream s(m_socket);
@@ -374,6 +387,27 @@ bool Connection::parseMessage(QString msg) {
     QString modeString = tmp.value(5);
 
     emit irc_mode(sender, target, modeString);
+
+    return true;
+  }
+
+  static const QRegExp reNICK(":(.+)!(.+)@(.+) NICK :(.+)$");
+  if (reNICK.exactMatch(msg)) {
+    QStringList tmp = reNICK.capturedTexts();
+    HostMask sender(tmp.value(1), tmp.value(2), tmp.value(3));
+    QString newNick = tmp.value(4);
+
+    if (sender.nick() == m_nick && newNick == m_desiredNick) {
+      // we changed our own nick
+      QString oldNick = m_nick;
+      m_nick = newNick;
+      m_desiredNick = "";
+
+      emit nickChanged(oldNick, newNick);
+    } else {
+      // another user changed their nickname
+      emit irc_nick(sender, newNick);
+    }
 
     return true;
   }

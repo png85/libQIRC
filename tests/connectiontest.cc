@@ -7,6 +7,7 @@ ConnectionTest::ConnectionTest(QObject* parent) : QObject(parent),
 
 void ConnectionTest::conn_connected(QIRC::ServerInfo si) {
   qDebug() << "Connected to" << si;
+  m_connection->setNick("TEST234");
 }
 
 void ConnectionTest::conn_disconnected(QIRC::ServerInfo si) {

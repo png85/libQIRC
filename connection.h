@@ -60,6 +60,9 @@ namespace QIRC {
     /// \brief Current nickname
     QString m_nick;
 
+    /// \brief Desired nickname for name changes
+    QString m_desiredNick;
+
     /// \brief Real name to use on IRC
     QString m_realName;
 
@@ -69,7 +72,7 @@ namespace QIRC {
     /// \brief Timer to send queued messages
     QTimer* m_tMessageQueue;
 
-    void sendMessage(QString msg, bool queued);
+    void sendMessage(QString msg, bool queued=true);
     bool parseMessage(QString msg);
     void authenticate();
 
@@ -148,6 +151,24 @@ namespace QIRC {
 
 
     void irc_mode(QIRC::HostMask sender, QString target, QString modeString);
+
+    /// \brief Successfully changed nickname
+    ///
+    /// This signal is emitted whenever we receive a NICK message that
+    /// indicates that we changed our own nickname.
+    ///
+    /// \param oldNick old nickname as string
+    /// \param newNick new nickname as string
+    void nickChanged(QString oldNick, QString newNick);
+
+    /// \brief Nickname change
+    ///
+    /// This signal is emitted whenever another user on IRC changes their
+    /// nickname.
+    ///
+    /// \param sender Host mask of the user that changed their nick
+    /// \param newNick New nickname of the user as string
+    void irc_nick(QIRC::HostMask sender, QString newNick);
 
   private:
     bool setupSocket();
