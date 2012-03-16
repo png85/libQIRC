@@ -41,6 +41,11 @@ namespace QIRC {
     void disconnect();
     bool isConnected() const;
 
+    void joinChannel(QString channel);
+    void partChannel(QString channel);
+
+    void quit(QString message, bool disconnect=true);
+
   protected:
     /// \brief ServerInfo for the currently connected server
     ServerInfo m_currentServer;

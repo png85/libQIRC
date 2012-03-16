@@ -465,3 +465,33 @@ void Connection::timer_messageQueue() {
     s << message;
   }
 }
+
+
+void Connection::joinChannel(QString channel) {
+  if (isConnected()) {
+    sendMessage("JOIN " + channel);
+  } else {
+    qWarning() << "Connection::joinChannel(" << channel << ") used "
+	       << "while Connection instance isn't connected!";
+  }
+}
+
+
+void Connection::partChannel(QString channel) {
+  if (isConnected()) {
+    sendMessage("PART " + channel);
+  } else {
+    qWarning() << "Connection::partChannel(" << channel << ") used "
+	       << "while Connection instance isn't connected!";
+  }
+}
+
+
+void Connection::quit(QString message, bool disconnect) {
+  if (isConnected()) {
+    sendMessage("QUIT :" + message);
+    if (disconnect) {
+      this->disconnect();
+    }
+  }
+}
