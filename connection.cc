@@ -412,6 +412,24 @@ bool Connection::parseMessage(QString msg) {
     return true;
   }
 
+  static const QRegExp reJOIN("^:(.+)!(.+)@(.+) JOIN :(.+)$");
+  if (reJOIN.exactMatch(msg)) {
+    QStringList tmp = reJOIN.capturedTexts();
+    HostMask sender(tmp.value(1), tmp.value(2), tmp.value(3));
+    QString channel = tmp.value(4);
+
+    return true;
+  }
+
+  static const QRegExp rePART("^:(.+)!(.+)@(.+) PART :(.+)$");
+  if (rePART.exactMatch(msg)) {
+    QStringList tmp = rePART.capturedTexts();
+    HostMask sender(tmp.value(1), tmp.value(2), tmp.value(3));
+    QString channel = tmp.value(4);
+
+    return true;
+  }
+
   // PING: <servername>
   static const QRegExp rePING("^PING :(.+)$");
   if (rePING.exactMatch(msg)) {
