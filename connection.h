@@ -241,6 +241,17 @@ namespace QIRC {
     /// \param newTopic New topic message as string
     void irc_topic(QIRC::HostMask sender, QString channel, QString newTopic);
 
+
+    /// \brief Channel invitation
+    ///
+    /// This signal is emitted whenever we've received an INVITE to a chat
+    /// channel from another user.
+    ///
+    /// \param sender Host mask of the user that sent the invite
+    /// \param target Nickname of the user that got invited
+    /// \param channel Name of the channel into which we've been invited
+    void irc_invite(QIRC::HostMask sender, QString target, QString channel);
+
   private:
     bool setupSocket();
     bool setupMessageQueue();

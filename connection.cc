@@ -465,6 +465,18 @@ bool Connection::parseMessage(QString msg) {
     return true;
   }
 
+  static const QRegExp reINVITE("^:(.+)!(.+)@(.+) INVITE (.+) (.+)$");
+  if (reINVITE.exactMatch(msg)) {
+    QStringList tmp = reINVITE.capturedTexts();
+    HostMask sender(tmp.value(1), tmp.value(2), tmp.value(3));
+    QString target = tmp.value(4);
+    QString channel = tmp.value(5);
+
+    emit irc_invite(sender, target, channel);
+
+    return true;
+  }
+
   static const QRegExp
     reChannelInfo("^:(.+) 333 (.+) (.+) (.+)!(.+)@(.+) ([0-9]+)$");
   if (reChannelInfo.exactMatch(msg)) {
