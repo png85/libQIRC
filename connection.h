@@ -45,6 +45,8 @@ namespace QIRC {
     void partChannel(QString channel);
 
     void getChannelTopic(QString channel);
+    void setChannelTopic(QString channel, QString topic);
+
     void getChannelNames(QString channel);
 
     void quit(QString message, bool disconnect=true);

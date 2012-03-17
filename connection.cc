@@ -571,6 +571,18 @@ void Connection::getChannelTopic(QString channel) {
 }
 
 
+/// \brief Change channel topic
+void Connection::setChannelTopic(QString channel, QString topic) {
+  if (isConnected()) {
+    sendMessage("TOPIC " + channel + " :" + topic);
+  } else {
+    qWarning() << "Tried to use Connection::setChannelTopic("
+	       << channel << "," << topic << ") while Connection instance "
+	       << "isn't connected!";
+  }
+}
+
+
 /// \brief Get list of users on a channel
 void Connection::getChannelNames(QString channel) {
   if (isConnected()) {
