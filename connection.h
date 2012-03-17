@@ -231,6 +231,16 @@ namespace QIRC {
     void irc_channelInfo(QString channel, QIRC::HostMask creator,
 			 quint32 ts);
 
+    /// \brief Channel topic changed
+    ///
+    /// This signal is emitted whenever the topic of an IRC channel gets
+    /// changed by another user.
+    ///
+    /// \param sender Host mask of the user that changed the channel's topic
+    /// \param channel Channel name as string
+    /// \param newTopic New topic message as string
+    void irc_topic(QIRC::HostMask sender, QString channel, QString newTopic);
+
   private:
     bool setupSocket();
     bool setupMessageQueue();

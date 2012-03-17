@@ -453,6 +453,18 @@ bool Connection::parseMessage(QString msg) {
     return true;
   }
 
+  static const QRegExp reTOPIC("^:(.+)!(.+)@(.+) TOPIC (.+) :(.+)$");
+  if (reTOPIC.exactMatch(msg)) {
+    QStringList tmp = reTOPIC.capturedTexts();
+    HostMask sender(tmp.value(1), tmp.value(2), tmp.value(3));
+    QString channel = tmp.value(4);
+    QString newTopic = tmp.value(5);
+
+    emit irc_topic(sender, channel, newTopic);
+
+    return true;
+  }
+
   static const QRegExp
     reChannelInfo("^:(.+) 333 (.+) (.+) (.+)!(.+)@(.+) ([0-9]+)$");
   if (reChannelInfo.exactMatch(msg)) {
