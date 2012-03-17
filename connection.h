@@ -49,6 +49,8 @@ namespace QIRC {
 
     void getChannelNames(QString channel);
 
+    void inviteUser(QString nick, QString channel);
+
     void quit(QString message, bool disconnect=true);
 
   protected:

@@ -617,3 +617,13 @@ void Connection::getChannelNames(QString channel) {
   }
 }
 
+
+/// \brief Invite user to channel
+void Connection::inviteUser(QString nick, QString channel) {
+  if (isConnected()) {
+    sendMessage("INVITE " + nick + " " + channel);
+  } else {
+    qWarning() << "Tried to use Connection::inviteUser(" << nick << ","
+	       << channel << ") while Connection instance isn't connected!";
+  }
+}
