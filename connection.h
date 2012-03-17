@@ -41,7 +41,7 @@ namespace QIRC {
     void disconnect();
     bool isConnected() const;
 
-    void joinChannel(QString channel);
+    void joinChannel(QString channel, QString key="");
     void partChannel(QString channel);
 
     void quit(QString message, bool disconnect=true);

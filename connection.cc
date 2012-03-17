@@ -513,9 +513,13 @@ void Connection::timer_messageQueue() {
 
 
 /// \brief Attempt to join a channel
-void Connection::joinChannel(QString channel) {
+void Connection::joinChannel(QString channel, QString key) {
   if (isConnected()) {
-    sendMessage("JOIN " + channel);
+    if (key != "") {
+      sendMessage("JOIN " + channel + " " + key);
+    } else {
+      sendMessage("JOIN " + channel);
+    }
   } else {
     qWarning() << "Connection::joinChannel(" << channel << ") used "
 	       << "while Connection instance isn't connected!";
