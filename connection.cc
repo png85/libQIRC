@@ -558,3 +558,26 @@ void Connection::quit(QString message, bool disconnect) {
 	       << "instance that isn't currently connected!";
   }
 }
+
+
+/// \brief Get channel topic
+void Connection::getChannelTopic(QString channel) {
+  if (isConnected()) {
+    sendMessage("TOPIC " + channel);
+  } else {
+    qWarning() << "Tried to use Connection::getChannelTopic("
+	       << channel << ") while connection instance isn't connected!";
+  }
+}
+
+
+/// \brief Get list of users on a channel
+void Connection::getChannelNames(QString channel) {
+  if (isConnected()) {
+    sendMessage("NAMES " + channel);
+  } else {
+    qWarning() << "Tried to use Connection::getChannelMembers("
+	       << channel << ") while connection instance isn't connected!";
+  }
+}
+
