@@ -10,7 +10,7 @@ find_path(QIRC_INCLUDE_DIR QIRC/connection.h
   /usr/include
 )
 
-find_libraries(QIRC_LIBRARIES QIRC
+find_library(QIRC_LIBRARIES QIRC
   PATHS
   "$ENV{QIRC}/lib"
   /usr/local/lib
