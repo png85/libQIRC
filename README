@@ -1,2 +1,9 @@
 QIRC is a Qt4-based C++ class library that provides connectivity to
 Internet Relay Chat (IRC) servers.
+
+-- Tested operating systems --
+ * Linux (Ubuntu 64bit)
+ * NetBSD 5.x (i386)
+
+ > Most other systems that have Qt4 available should work as well.
+
