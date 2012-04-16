@@ -306,7 +306,7 @@ void Connection::sendMessage(QString msg, bool queued) {
 /// any of the others are sent.
 void Connection::authenticate() {
   if (!m_connected) {
-    qWarning() << "Tried to use Connection::authenticat() while "
+    qWarning() << "Tried to use Connection::authenticate() while "
 	       << "m_connected!=true!";
   }
 
