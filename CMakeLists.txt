@@ -29,12 +29,12 @@ include(${QT_USE_FILE})
 
 #
 # list of libQIRC sources
-set(libQIRC_SOURCES serverinfo.cc hostmask.cc connection.cc)
+set(libQIRC_SOURCES serverinfo.cc hostmask.cc connection.cc colors.cc)
 
 #
 # list of libQIRC headers
 set(libQIRC_HEADERS serverinfo.h ServerInfo
-  hostmask.h HostMask connection.h Connection)
+  hostmask.h HostMask connection.h Connection qirc.h)
 
 # list of headers to process with Qt moc
 set(libQIRC_MOC_HEADERS connection.h)
