@@ -465,7 +465,7 @@ bool Connection::parseMessage(QString msg) {
     return true;
   }
 
-  static const QRegExp reINVITE("^:(.+)!(.+)@(.+) INVITE (.+) (.+)$");
+  static const QRegExp reINVITE("^:(.+)!(.+)@(.+) INVITE (.+) :(.+)$");
   if (reINVITE.exactMatch(msg)) {
     QStringList tmp = reINVITE.capturedTexts();
     HostMask sender(tmp.value(1), tmp.value(2), tmp.value(3));
