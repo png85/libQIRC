@@ -421,7 +421,7 @@ bool Connection::parseMessage(QString msg) {
     if (sender.nick() != m_nick) {
       emit irc_join(sender, channel);
     } else {
-      emit partedChannel(channel);
+      emit joinedChannel(channel);
     }
 
     return true;
