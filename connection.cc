@@ -427,7 +427,7 @@ bool Connection::parseMessage(QString msg) {
     return true;
   }
 
-  static const QRegExp rePART("^:(.+)!(.+)@(.+) PART :(.+)$");
+  static const QRegExp rePART("^:(.+)!(.+)@(.+) PART (.+)$");
   if (rePART.exactMatch(msg)) {
     QStringList tmp = rePART.capturedTexts();
     HostMask sender(tmp.value(1), tmp.value(2), tmp.value(3));
