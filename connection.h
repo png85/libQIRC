@@ -53,6 +53,8 @@ namespace QIRC {
 
     void quit(QString message, bool disconnect=true);
 
+    void privmsg(QString target, QString text);
+
   protected:
     /// \brief ServerInfo for the currently connected server
     ServerInfo m_currentServer;

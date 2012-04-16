@@ -627,3 +627,14 @@ void Connection::inviteUser(QString nick, QString channel) {
 	       << channel << ") while Connection instance isn't connected!";
   }
 }
+
+
+void Connection::privmsg(QString target, QString text) {
+  if (isConnected()) {
+    sendMessage("PRIVMSG " + target + " :" + text);
+  } else {
+    qWarning() << "Tried to use Connection::privmsg() while "
+	       << "Connection instance isn't connected!";
+  }
+}
+
