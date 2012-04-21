@@ -6,6 +6,12 @@ project(libQIRC)
 cmake_minimum_required(VERSION 2.8)
 
 #
+# On windows we want to build our library as a .dll
+if(WIN32)
+  set(BUILD_SHARED_LIBS ON)
+endif(WIN32)
+
+#
 # add cmake/ directory with our custom cmake macros to module path
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
