@@ -8,9 +8,11 @@
 #include <QDebug>
 #include <QString>
 
+#include "qirc.h"
+
 namespace QIRC {
   /// \brief Utility class to store an user hostmask
-  class HostMask {
+  class QIRC_EXPORT HostMask {
   public:
     HostMask(QString nick, QString user, QString host);
     HostMask(const HostMask& other);

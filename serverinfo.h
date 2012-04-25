@@ -8,9 +8,11 @@
 #include <QDebug>
 #include <QString>
 
+#include "qirc.h"
+
 namespace QIRC {
   /// \brief Utility class to store a server address
-  class ServerInfo {
+  class QIRC_EXPORT ServerInfo {
   public:
     ServerInfo(QString host, quint16 port);
     ServerInfo(const ServerInfo& o);

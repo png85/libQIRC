@@ -9,11 +9,13 @@
 #include "ServerInfo"
 #include "HostMask"
 
+#include "qirc.h"
+
 namespace QIRC {
   /// \brief Connection to an IRC server
   ///
   /// This class maintains a connection to an IRC server.
-  class Connection : public QObject {
+  class QIRC_EXPORT Connection : public QObject {
     Q_OBJECT
   public:
     Connection();
