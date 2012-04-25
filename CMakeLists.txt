@@ -49,6 +49,7 @@ QT4_WRAP_CPP(libQIRC_MOC_SOURCES ${libQIRC_MOC_HEADERS})
 #
 # build target for libQIRC static library
 add_library(QIRC ${libQIRC_SOURCES} ${libQIRC_MOC_SOURCES})
+target_link_libraries(QIRC ${QT_LIBRARIES})
 
 #
 # install rules for library+headers
