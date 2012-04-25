@@ -6,10 +6,12 @@ project(libQIRC)
 cmake_minimum_required(VERSION 2.8)
 
 #
-# On windows we want to build our library as a .dll
-if(WIN32)
-  set(BUILD_SHARED_LIBS ON)
-endif(WIN32)
+# allow the user to select wether he wants a static or shared library
+option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
+set(LIB_TYPE STATIC)
+if(BUILD_SHARED_LIBS)
+  set(LIB_TYPE SHARED)
+endif(BUILD_SHARED_LIBS)
 
 #
 # add cmake/ directory with our custom cmake macros to module path
@@ -48,7 +50,7 @@ QT4_WRAP_CPP(libQIRC_MOC_SOURCES ${libQIRC_MOC_HEADERS})
 
 #
 # build target for libQIRC static library
-add_library(QIRC ${libQIRC_SOURCES} ${libQIRC_MOC_SOURCES})
+add_library(QIRC ${LIB_TYPE} ${libQIRC_SOURCES} ${libQIRC_MOC_SOURCES})
 target_link_libraries(QIRC ${QT_LIBRARIES})
 
 #
