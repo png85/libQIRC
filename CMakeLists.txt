@@ -5,6 +5,14 @@
 project(libQIRC)
 cmake_minimum_required(VERSION 2.8)
 
+include(CTest)
+enable_testing()
+if(BUILD_TESTING)
+  set(BUILDNAME "${BUILDNAME}" CACHE STRING "Name of build on CDash dashboard")
+  mark_as_advanced(BUILDNAME)
+endif(BUILD_TESTING)
+
+
 #
 # allow the user to select wether he wants a static or shared library
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
