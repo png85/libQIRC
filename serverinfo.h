@@ -12,7 +12,7 @@
 
 namespace QIRC {
   /// \brief Utility class to store a server address
-  class QIRC_EXPORT ServerInfo {
+  class ServerInfo {
   public:
     ServerInfo(QString host, quint16 port);
     ServerInfo(const ServerInfo& o);

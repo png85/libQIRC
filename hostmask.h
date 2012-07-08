@@ -12,7 +12,7 @@
 
 namespace QIRC {
   /// \brief Utility class to store an user hostmask
-  class QIRC_EXPORT HostMask {
+  class HostMask {
   public:
     HostMask(QString nick, QString user, QString host);
     HostMask(const HostMask& other);

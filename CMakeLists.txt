@@ -19,6 +19,8 @@ option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 set(LIB_TYPE STATIC)
 if(BUILD_SHARED_LIBS)
   set(LIB_TYPE SHARED)
+else(BUILD_SHARED_LIBS)
+  set(LIB_TYPE STATIC)
 endif(BUILD_SHARED_LIBS)
 
 #
