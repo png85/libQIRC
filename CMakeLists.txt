@@ -46,6 +46,11 @@ find_package(Qt4 REQUIRED QtCore QtNetwork)
 include(${QT_USE_FILE})
 
 #
+# Include cppcheck testing targets if we have cppcheck installed
+include(CppCheckTargets)
+
+
+#
 # list of libQIRC sources
 set(libQIRC_SOURCES serverinfo.cc hostmask.cc connection.cc colors.cc)
 
@@ -62,6 +67,9 @@ QT4_WRAP_CPP(libQIRC_MOC_SOURCES ${libQIRC_MOC_HEADERS})
 # build target for libQIRC static library
 add_library(QIRC ${LIB_TYPE} ${libQIRC_SOURCES} ${libQIRC_MOC_SOURCES})
 target_link_libraries(QIRC ${QT_LIBRARIES})
+if(CPPCHECK_FOUND)
+  add_cppcheck(QIRC STYLE)
+endif(CPPCHECK_FOUND)
 
 #
 # install rules for library+headers
@@ -72,6 +80,7 @@ install(FILES ${libQIRC_HEADERS} DESTINATION include/QIRC)
 # Check if Doxygen is installed and if so add build targets for
 # the API dox
 include(DocTarget OPTIONAL)
+
 
 #
 # Install a CMake macro to find our library
