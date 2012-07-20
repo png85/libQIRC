@@ -2,6 +2,8 @@ if(QIRC_INCLUDE_DIR)
   set(QIRC_FIND_QUIETLY TRUE)
 endif(QIRC_INCLUDE_DIR)
 
+#
+# Look for QIRC headers
 find_path(QIRC_INCLUDE_DIR QIRC/connection.h
   PATHS
   "$ENV{QIRC}/include"
@@ -10,6 +12,8 @@ find_path(QIRC_INCLUDE_DIR QIRC/connection.h
   /usr/include
 )
 
+#
+# Look for the actual library
 find_library(QIRC_LIBRARIES QIRC
   PATHS
   "$ENV{QIRC}/lib"
